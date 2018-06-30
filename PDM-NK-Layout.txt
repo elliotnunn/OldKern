@@ -1,0 +1,39 @@
+0000:0468 NKInit
+0468:0674 NKThud
+0680:0920 NKPrimaryInterruptHandlers
+0940:0BA8 NKInterrupts
+	IntDecrementer
+	IntDSI
+	IntAlignment
+0C00:1874 NKTranslation (plus MemRetry interrupt handlers)
+1874:18F8 NKInterrupts2
+	IntISI
+	IntMachineCheck
+18F8:1FB8 NKPaging
+1FB8:24F4 NKReturns
+	Exception[MemRetried]
+	kcReturnFromException
+	IntReturnToSystemContext
+	IntReturnToOtherBlueContext
+	IntReturn (has own RFI, no scheduler to call)
+	major_0x02ccc
+2500:289C NKFloat
+	IntFPUnavail
+	IntHandleSpecialFPException
+	LoadFloatsFromContextBlock
+	bugger_around_with_floats
+	FloatLoadJumpTable
+	FloatSaveJumpTable
+289C:2B00 NKAlternateContext
+	_msr_12_was_set_suspicious
+	kcRunAlternateContext
+2B00:2ED8 NKInit2
+	kcResetSystem (does high-level SecInit unless skeleton key)
+	SecInit
+2EE0:2F28 kcPrioritizeInterrupts
+2F28:2F7C kcThud
+2F80:308C PIH_Alternate
+20A0:20CC NKSoftwareInts
+	IntSyscall (always an exception)
+	IntTrace (likewise)
+30CC:3CA8 NKVMCalls
