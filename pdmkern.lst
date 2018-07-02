@@ -6481,6 +6481,7 @@ ROM:0000313C                 b         VMReturn
 ROM:00003140 # ---------------------------------------------------------------------------
 ROM:00003140
 ROM:00003140 loc_3140:                               # CODE XREF: VMInit+264↓j
+ROM:00003140                                         # ROM:00003844↓j ...
 ROM:00003140                 li        r3, 0
 ROM:00003144                 b         VMReturn
 ROM:00003148 # ---------------------------------------------------------------------------
@@ -6984,52 +6985,18 @@ ROM:000036AC                 li        r8, 0
 ROM:000036B0                 li        r9, 0
 ROM:000036B4                 bl        loc_3B10
 ROM:000036B8                 b         VMReturn
-ROM:000036B8 # ---------------------------------------------------------------------------
-ROM:000036BC                 .byte 0x48 # H
-ROM:000036BD                 .byte    0
-ROM:000036BE                 .byte    3
-ROM:000036BF                 .byte 0x61 # a
-ROM:000036C0                 .byte 0x56 # V
-ROM:000036C1                 .byte    7
-ROM:000036C2                 .byte    6
-ROM:000036C3                 .byte 0x74 # t
-ROM:000036C4                 .byte 0x2C # ,
-ROM:000036C5                 .byte    7
-ROM:000036C6                 .byte    0
-ROM:000036C7                 .byte 0x60 # `
-ROM:000036C8                 .byte 0x40 # @
-ROM:000036C9                 .byte 0x9F
-ROM:000036CA                 .byte 0xFA
-ROM:000036CB                 .byte 0x70 # p
-ROM:000036CC                 .byte 0x41 # A
-ROM:000036CD                 .byte 0x82
-ROM:000036CE                 .byte 0xFA
-ROM:000036CF                 .byte 0x80
-ROM:000036D0                 .byte 0x40 # @
-ROM:000036D1                 .byte 0x90
-ROM:000036D2                 .byte 0xFA
-ROM:000036D3                 .byte 0x68 # h
-ROM:000036D4                 .byte 0x40 # @
-ROM:000036D5                 .byte 0x94
-ROM:000036D6                 .byte    4
-ROM:000036D7                 .byte 0x8D
-ROM:000036D8                 .byte 0x55 # U
-ROM:000036D9                 .byte 0x29 # )
-ROM:000036DA                 .byte    6
-ROM:000036DB                 .byte 0xF0
-ROM:000036DC                 .byte 0x62 # b
-ROM:000036DD                 .byte 0x10
-ROM:000036DE                 .byte    0
-ROM:000036DF                 .byte 0x60 # `
-ROM:000036E0                 .byte 0x61 # a
-ROM:000036E1                 .byte 0x29 # )
-ROM:000036E2                 .byte    0
-ROM:000036E3                 .byte 0x20
-ROM:000036E4                 .byte 0x48 # H
-ROM:000036E5                 .byte    0
-ROM:000036E6                 .byte    4
-ROM:000036E7                 .byte 0x29 # )
-ROM:000036E8 # ---------------------------------------------------------------------------
+ROM:000036BC # ---------------------------------------------------------------------------
+ROM:000036BC                 bl        GetPARPageInfo
+ROM:000036C0                 rlwinm    r7, r16, 0,25,26
+ROM:000036C4                 cmpwi     r7, 0x60
+ROM:000036C8                 bns       cr7, loc_3138
+ROM:000036CC                 beq       VMReturn
+ROM:000036D0                 bge       cr4, loc_3138
+ROM:000036D4                 bgel      cr5, sub_3B60
+ROM:000036D8                 rlwinm    r9, r9, 0,27,24
+ROM:000036DC                 ori       r16, r16, 0x60
+ROM:000036E0                 ori       r9, r9, 0x20
+ROM:000036E4                 bl        sub_3B0C
 ROM:000036E8
 ROM:000036E8 loc_36E8:                               # CODE XREF: sub_3540+28↑j
 ROM:000036E8                 clrrwi    r4, r9, 12
@@ -7057,664 +7024,190 @@ ROM:00003704                 bne       loc_36F8
 ROM:00003708                 b         VMReturn
 ROM:00003708 # End of function sub_3704
 ROM:00003708
-ROM:00003708 # ---------------------------------------------------------------------------
-ROM:0000370C                 .byte 0x48 # H
-ROM:0000370D                 .byte    0
-ROM:0000370E                 .byte    3
-ROM:0000370F                 .byte 0x11
-ROM:00003710                 .byte 0x40 # @
-ROM:00003711                 .byte 0x90
-ROM:00003712                 .byte 0xFA
-ROM:00003713                 .byte 0x28 # (
-ROM:00003714                 .byte 0x41 # A
-ROM:00003715                 .byte 0x95
-ROM:00003716                 .byte 0xFA
-ROM:00003717                 .byte 0x24 # $
-ROM:00003718                 .byte 0x41 # A
-ROM:00003719                 .byte 0x94
-ROM:0000371A                 .byte    4
-ROM:0000371B                 .byte 0x15
-ROM:0000371C                 .byte 0x50 # P
-ROM:0000371D                 .byte 0xB0
-ROM:0000371E                 .byte 0x83
-ROM:0000371F                 .byte 0xDE
-ROM:00003720                 .byte 0x38 # 8
-ROM:00003721                 .byte 0xE0
-ROM:00003722                 .byte    0
-ROM:00003723                 .byte    1
-ROM:00003724                 .byte 0x7E # ~
-ROM:00003725                 .byte 0x10
-ROM:00003726                 .byte 0x38 # 8
-ROM:00003727                 .byte 0x78 # x
-ROM:00003728                 .byte 0x92
-ROM:00003729                 .byte  0xF
-ROM:0000372A                 .byte    0
-ROM:0000372B                 .byte    0
-ROM:0000372C                 .byte 0x4B # K
-ROM:0000372D                 .byte 0xFF
-ROM:0000372E                 .byte 0xFA
-ROM:0000372F                 .byte 0x20
-ROM:00003730                 .byte 0x48 # H
-ROM:00003731                 .byte    0
-ROM:00003732                 .byte    2
-ROM:00003733                 .byte 0xED
-ROM:00003734                 .byte 0x40 # @
-ROM:00003735                 .byte 0x90
-ROM:00003736                 .byte 0xFA
-ROM:00003737                 .byte    4
-ROM:00003738                 .byte 0x40 # @
-ROM:00003739                 .byte 0x9F
-ROM:0000373A                 .byte 0xFA
-ROM:0000373B                 .byte    0
-ROM:0000373C                 .byte 0x40 # @
-ROM:0000373D                 .byte 0x94
-ROM:0000373E                 .byte    4
-ROM:0000373F                 .byte 0x25 # %
-ROM:00003740                 .byte 0x38 # 8
-ROM:00003741                 .byte 0xE0
-ROM:00003742                 .byte    1
-ROM:00003743                 .byte 0x80
-ROM:00003744                 .byte 0x7D # }
-ROM:00003745                 .byte 0x29 # )
-ROM:00003746                 .byte 0x38 # 8
-ROM:00003747                 .byte 0x78 # x
-ROM:00003748                 .byte 0x62 # b
-ROM:00003749                 .byte 0x10
-ROM:0000374A                 .byte    1
-ROM:0000374B                 .byte    0
-ROM:0000374C                 .byte 0x48 # H
-ROM:0000374D                 .byte    0
-ROM:0000374E                 .byte    3
-ROM:0000374F                 .byte 0xC1
-ROM:00003750                 .byte 0x4B # K
-ROM:00003751                 .byte 0xFF
-ROM:00003752                 .byte 0xF9
-ROM:00003753                 .byte 0xFC
-ROM:00003754                 .byte 0x7C # |
-ROM:00003755                 .byte    4
-ROM:00003756                 .byte 0x48 # H
-ROM:00003757                 .byte 0x40 # @
-ROM:00003758                 .byte 0x7C # |
-ROM:00003759                 .byte 0x85
-ROM:0000375A                 .byte 0x48 # H
-ROM:0000375B                 .byte 0x40 # @
-ROM:0000375C                 .byte 0x7C # |
-ROM:0000375D                 .byte 0xE4
-ROM:0000375E                 .byte 0x2A # *
-ROM:0000375F                 .byte 0x14
-ROM:00003760                 .byte 0x7D # }
-ROM:00003761                 .byte    7
-ROM:00003762                 .byte 0x48 # H
-ROM:00003763                 .byte 0x40 # @
-ROM:00003764                 .byte 0x40 # @
-ROM:00003765                 .byte 0x80
-ROM:00003766                 .byte 0xF9
-ROM:00003767                 .byte 0xD4
-ROM:00003768                 .byte 0x41 # A
-ROM:00003769                 .byte 0x85
-ROM:0000376A                 .byte 0xF9
-ROM:0000376B                 .byte 0xD0
-ROM:0000376C                 .byte 0x41 # A
-ROM:0000376D                 .byte 0x89
-ROM:0000376E                 .byte 0xF9
-ROM:0000376F                 .byte 0xCC
-ROM:00003770                 .byte 0x81
-ROM:00003771                 .byte 0xE1
-ROM:00003772                 .byte    6
-ROM:00003773                 .byte 0xB0
-ROM:00003774                 .byte 0x54 # T
-ROM:00003775                 .byte 0xE8
-ROM:00003776                 .byte 0x10
-ROM:00003777                 .byte 0x3A # :
-ROM:00003778                 .byte 0x38 # 8
-ROM:00003779                 .byte 0xE0
-ROM:0000377A                 .byte    0
-ROM:0000377B                 .byte    1
-ROM:0000377C                 .byte 0x39 # 9
-ROM:0000377D                 .byte    8
-ROM:0000377E                 .byte 0xFF
-ROM:0000377F                 .byte 0xFC
-ROM:00003780                 .byte 0x7C # |
-ROM:00003781                 .byte 0xA7
-ROM:00003782                 .byte 0x28 # (
-ROM:00003783                 .byte 0x51 # Q
-ROM:00003784                 .byte 0x7E # ~
-ROM:00003785                 .byte  0xF
-ROM:00003786                 .byte 0x40 # @
-ROM:00003787                 .byte 0x2E # .
-ROM:00003788                 .byte 0x41 # A
-ROM:00003789                 .byte 0x80
-ROM:0000378A                 .byte 0xF9
-ROM:0000378B                 .byte 0xC4
-ROM:0000378C                 .byte 0x50 # P
-ROM:0000378D                 .byte 0xD0
-ROM:0000378E                 .byte 0x3E # >
-ROM:0000378F                 .byte 0x30 # 0
-ROM:00003790                 .byte 0x7E # ~
-ROM:00003791                 .byte  0xF
-ROM:00003792                 .byte 0x41 # A
-ROM:00003793                 .byte 0x2E # .
-ROM:00003794                 .byte 0x4B # K
-ROM:00003795                 .byte 0xFF
-ROM:00003796                 .byte 0xFF
-ROM:00003797                 .byte 0xE8
-ROM:00003798                 .byte 0x48 # H
-ROM:00003799                 .byte    0
-ROM:0000379A                 .byte    2
-ROM:0000379B                 .byte 0x85
-ROM:0000379C                 .byte 0x40 # @
-ROM:0000379D                 .byte 0x90
-ROM:0000379E                 .byte 0xF9
-ROM:0000379F                 .byte 0x9C
-ROM:000037A0                 .byte 0x41 # A
-ROM:000037A1                 .byte 0x9F
-ROM:000037A2                 .byte 0xF9
-ROM:000037A3                 .byte 0x98
-ROM:000037A4                 .byte 0x41 # A
-ROM:000037A5                 .byte 0x94
-ROM:000037A6                 .byte 0xCC
-ROM:000037A7                 .byte 0xC5
-ROM:000037A8                 .byte 0x50 # P
-ROM:000037A9                 .byte 0xB0
-ROM:000037AA                 .byte 0x60 # `
-ROM:000037AB                 .byte 0x26 # &
-ROM:000037AC                 .byte 0x62 # b
-ROM:000037AD                 .byte 0x10
-ROM:000037AE                 .byte    0
-ROM:000037AF                 .byte    1
-ROM:000037B0                 .byte 0x92
-ROM:000037B1                 .byte  0xF
-ROM:000037B2                 .byte    0
-ROM:000037B3                 .byte    0
-ROM:000037B4                 .byte 0x48 # H
-ROM:000037B5                 .byte    0
-ROM:000037B6                 .byte    3
-ROM:000037B7                 .byte 0xAD
-ROM:000037B8                 .byte 0x48 # H
-ROM:000037B9                 .byte    0
-ROM:000037BA                 .byte    3
-ROM:000037BB                 .byte 0x55 # U
-ROM:000037BC                 .byte 0x4B # K
-ROM:000037BD                 .byte 0xFF
-ROM:000037BE                 .byte 0xF9
-ROM:000037BF                 .byte 0x90
-ROM:000037C0                 .byte 0x54 # T
-ROM:000037C1                 .byte 0x84
-ROM:000037C2                 .byte 0xA3
-ROM:000037C3                 .byte 0x3E # >
-ROM:000037C4                 .byte 0x7C # |
-ROM:000037C5                 .byte    4
-ROM:000037C6                 .byte 0x48 # H
-ROM:000037C7                 .byte 0x40 # @
-ROM:000037C8                 .byte 0x38 # 8
-ROM:000037C9                 .byte 0x60 # `
-ROM:000037CA                 .byte 0x40 # @
-ROM:000037CB                 .byte    0
-ROM:000037CC                 .byte 0x40 # @
-ROM:000037CD                 .byte 0x80
-ROM:000037CE                 .byte 0xF9
-ROM:000037CF                 .byte 0x80
-ROM:000037D0                 .byte 0x48 # H
-ROM:000037D1                 .byte    0
-ROM:000037D2                 .byte    2
-ROM:000037D3                 .byte 0x4D # M
-ROM:000037D4                 .byte 0x38 # 8
-ROM:000037D5                 .byte 0x60 # `
-ROM:000037D6                 .byte    4
-ROM:000037D7                 .byte    0
-ROM:000037D8                 .byte 0x40 # @
-ROM:000037D9                 .byte 0x9F
-ROM:000037DA                 .byte 0xF9
-ROM:000037DB                 .byte 0x74 # t
-ROM:000037DC                 .byte 0x38 # 8
-ROM:000037DD                 .byte 0x60 # `
-ROM:000037DE                 .byte    0
-ROM:000037DF                 .byte    0
-ROM:000037E0                 .byte 0x60 # `
-ROM:000037E1                 .byte 0x63 # c
-ROM:000037E2                 .byte 0x80
-ROM:000037E3                 .byte    0
-ROM:000037E4                 .byte 0x40 # @
-ROM:000037E5                 .byte 0x9D
-ROM:000037E6                 .byte 0xF9
-ROM:000037E7                 .byte 0x68 # h
-ROM:000037E8                 .byte 0x2C # ,
-ROM:000037E9                 .byte    6
-ROM:000037EA                 .byte    0
-ROM:000037EB                 .byte    0
-ROM:000037EC                 .byte 0x41 # A
-ROM:000037ED                 .byte 0x82
-ROM:000037EE                 .byte 0xF9
-ROM:000037EF                 .byte 0x60 # `
-ROM:000037F0                 .byte 0x38 # 8
-ROM:000037F1                 .byte 0x60 # `
-ROM:000037F2                 .byte    8
-ROM:000037F3                 .byte    0
-ROM:000037F4                 .byte 0x4B # K
-ROM:000037F5                 .byte 0xFF
-ROM:000037F6                 .byte 0xF9
-ROM:000037F7                 .byte 0x58 # X
-ROM:000037F8                 .byte 0x7C # |
-ROM:000037F9                 .byte 0x86
-ROM:000037FA                 .byte 0x23 # #
-ROM:000037FB                 .byte 0x78 # x
-ROM:000037FC                 .byte 0x7C # |
-ROM:000037FD                 .byte 0xA4
-ROM:000037FE                 .byte 0x2B # +
-ROM:000037FF                 .byte 0x78 # x
-ROM:00003800                 .byte 0x48 # H
-ROM:00003801                 .byte    0
-ROM:00003802                 .byte    2
-ROM:00003803                 .byte 0x1D
-ROM:00003804                 .byte 0x40 # @
-ROM:00003805                 .byte 0x90
-ROM:00003806                 .byte 0xF9
-ROM:00003807                 .byte 0x34 # 4
-ROM:00003808                 .byte 0x7E # ~
-ROM:00003809                 .byte    7
-ROM:0000380A                 .byte 0x32 # 2
-ROM:0000380B                 .byte 0x78 # x
-ROM:0000380C                 .byte 0x38 # 8
-ROM:0000380D                 .byte 0x60 # `
-ROM:0000380E                 .byte    4
-ROM:0000380F                 .byte 0x61 # a
-ROM:00003810                 .byte 0x52 # R
-ROM:00003811                 .byte    3
-ROM:00003812                 .byte 0xC7
-ROM:00003813                 .byte 0x7A # z
-ROM:00003814                 .byte 0x7C # |
-ROM:00003815                 .byte 0x63 # c
-ROM:00003816                 .byte 0x38 # 8
-ROM:00003817                 .byte 0x39 # 9
-ROM:00003818                 .byte 0x40 # @
-ROM:00003819                 .byte 0x82
-ROM:0000381A                 .byte 0xF9
-ROM:0000381B                 .byte 0x20
-ROM:0000381C                 .byte 0x70 # p
-ROM:0000381D                 .byte 0xE7
-ROM:0000381E                 .byte    1
-ROM:0000381F                 .byte 0x1C
-ROM:00003820                 .byte 0x7E # ~
-ROM:00003821                 .byte 0x10
-ROM:00003822                 .byte 0x3A # :
-ROM:00003823                 .byte 0x78 # x
-ROM:00003824                 .byte 0x92
-ROM:00003825                 .byte  0xF
-ROM:00003826                 .byte    0
-ROM:00003827                 .byte    0
-ROM:00003828                 .byte 0x40 # @
-ROM:00003829                 .byte 0x94
-ROM:0000382A                 .byte 0xF9
-ROM:0000382B                 .byte 0x24 # $
-ROM:0000382C                 .byte 0x52 # R
-ROM:0000382D                 .byte    9
-ROM:0000382E                 .byte 0x2D # -
-ROM:0000382F                 .byte 0xEE
-ROM:00003830                 .byte 0x52 # R
-ROM:00003831                 .byte    9
-ROM:00003832                 .byte 0x1E
-ROM:00003833                 .byte 0x30 # 0
-ROM:00003834                 .byte 0x52 # R
-ROM:00003835                 .byte    9
-ROM:00003836                 .byte 0xF7
-ROM:00003837                 .byte 0xFE
-ROM:00003838                 .byte 0x48 # H
-ROM:00003839                 .byte    0
-ROM:0000383A                 .byte    2
-ROM:0000383B                 .byte 0xDD
-ROM:0000383C                 .byte 0x4B # K
-ROM:0000383D                 .byte 0xFF
-ROM:0000383E                 .byte 0xF9
-ROM:0000383F                 .byte 0x10
-ROM:00003840                 .byte 0x48 # H
-ROM:00003841                 .byte    0
-ROM:00003842                 .byte    1
-ROM:00003843                 .byte 0xDD
-ROM:00003844                 .byte 0x40 # @
-ROM:00003845                 .byte 0x9F
-ROM:00003846                 .byte 0xF8
-ROM:00003847                 .byte 0xFC
-ROM:00003848                 .byte 0x41 # A
-ROM:00003849                 .byte 0x9C
-ROM:0000384A                 .byte 0xF8
-ROM:0000384B                 .byte 0xF8
-ROM:0000384C                 .byte 0x40 # @
-ROM:0000384D                 .byte 0x9B
-ROM:0000384E                 .byte 0xF8
-ROM:0000384F                 .byte 0xF4
-ROM:00003850                 .byte 0x40 # @
-ROM:00003851                 .byte 0x90
-ROM:00003852                 .byte 0xF8
-ROM:00003853                 .byte 0xE8
-ROM:00003854                 .byte 0x6A # j
-ROM:00003855                 .byte 0x10
-ROM:00003856                 .byte    0
-ROM:00003857                 .byte 0x10
-ROM:00003858                 .byte 0x62 # b
-ROM:00003859                 .byte 0x10
-ROM:0000385A                 .byte    1
-ROM:0000385B                 .byte    0
-ROM:0000385C                 .byte 0x92
-ROM:0000385D                 .byte  0xF
-ROM:0000385E                 .byte    0
-ROM:0000385F                 .byte    0
-ROM:00003860                 .byte 0x40 # @
-ROM:00003861                 .byte 0x94
-ROM:00003862                 .byte 0xF8
-ROM:00003863                 .byte 0xE8
-ROM:00003864                 .byte 0x69 # i
-ROM:00003865                 .byte 0x29 # )
-ROM:00003866                 .byte    0
-ROM:00003867                 .byte 0x80
-ROM:00003868                 .byte 0x48 # H
-ROM:00003869                 .byte    0
-ROM:0000386A                 .byte    2
-ROM:0000386B                 .byte 0xAD
-ROM:0000386C                 .byte 0x4B # K
-ROM:0000386D                 .byte 0xFF
-ROM:0000386E                 .byte 0xF8
-ROM:0000386F                 .byte 0xDC
-ROM:00003870                 .byte 0x80
-ROM:00003871                 .byte 0xE1
-ROM:00003872                 .byte    6
-ROM:00003873                 .byte 0xB0
-ROM:00003874                 .byte 0x81
-ROM:00003875                 .byte    1
-ROM:00003876                 .byte    5
-ROM:00003877                 .byte 0xB0
-ROM:00003878                 .byte 0x2F # /
-ROM:00003879                 .byte    5
-ROM:0000387A                 .byte    0
-ROM:0000387B                 .byte    0
-ROM:0000387C                 .byte 0x7F # 
-ROM:0000387D                 .byte 0x87
-ROM:0000387E                 .byte 0x40 # @
-ROM:0000387F                 .byte    0
-ROM:00003880                 .byte 0x7C # |
-ROM:00003881                 .byte 0x87
-ROM:00003882                 .byte 0x33 # 3
-ROM:00003883                 .byte 0x78 # x
-ROM:00003884                 .byte 0x54 # T
-ROM:00003885                 .byte 0xE7
-ROM:00003886                 .byte    0
-ROM:00003887                 .byte 0x17
-ROM:00003888                 .byte 0x40 # @
-ROM:00003889                 .byte 0x99
-ROM:0000388A                 .byte 0xF8
-ROM:0000388B                 .byte 0xB0
-ROM:0000388C                 .byte 0x81
-ROM:0000388D                 .byte 0x21 # !
-ROM:0000388E                 .byte    6
-ROM:0000388F                 .byte 0xA8
-ROM:00003890                 .byte 0x40 # @
-ROM:00003891                 .byte 0x9E
-ROM:00003892                 .byte 0xF8
-ROM:00003893                 .byte 0xA8
-ROM:00003894                 .byte 0x7C # |
-ROM:00003895                 .byte 0x87
-ROM:00003896                 .byte 0x23 # #
-ROM:00003897                 .byte 0x78 # x
-ROM:00003898                 .byte 0x40 # @
-ROM:00003899                 .byte 0x82
-ROM:0000389A                 .byte 0xF8
-ROM:0000389B                 .byte 0xA0
-ROM:0000389C                 .byte 0x7D # }
-ROM:0000389D                 .byte 0x24 # $
-ROM:0000389E                 .byte 0x4B # K
-ROM:0000389F                 .byte 0x78 # x
-ROM:000038A0                 .byte 0x54 # T
-ROM:000038A1                 .byte 0xC6
-ROM:000038A2                 .byte 0x60 # `
-ROM:000038A3                 .byte 0x26 # &
-ROM:000038A4                 .byte 0x38 # 8
-ROM:000038A5                 .byte 0xA5
-ROM:000038A6                 .byte 0xFF
-ROM:000038A7                 .byte 0xFF
-ROM:000038A8                 .byte 0x38 # 8
-ROM:000038A9                 .byte 0x84
-ROM:000038AA                 .byte 0xFF
-ROM:000038AB                 .byte 0xFF
-ROM:000038AC                 .byte 0x48 # H
-ROM:000038AD                 .byte    0
-ROM:000038AE                 .byte    1
-ROM:000038AF                 .byte 0x71 # q
-ROM:000038B0                 .byte 0x41 # A
-ROM:000038B1                 .byte 0x94
-ROM:000038B2                 .byte    2
-ROM:000038B3                 .byte 0x7D # }
-ROM:000038B4                 .byte 0x81
-ROM:000038B5                 .byte 0x21 # !
-ROM:000038B6                 .byte    6
-ROM:000038B7                 .byte 0xA8
-ROM:000038B8                 .byte 0x7D # }
-ROM:000038B9                 .byte    4
-ROM:000038BA                 .byte 0x48 # H
-ROM:000038BB                 .byte 0x50 # P
-ROM:000038BC                 .byte 0x7F # 
-ROM:000038BD                 .byte 0x85
-ROM:000038BE                 .byte 0x40 # @
-ROM:000038BF                 .byte 0x40 # @
-ROM:000038C0                 .byte 0x7E # ~
-ROM:000038C1                 .byte    8
-ROM:000038C2                 .byte 0x30 # 0
-ROM:000038C3                 .byte 0x39 # 9
-ROM:000038C4                 .byte 0x40 # @
-ROM:000038C5                 .byte 0x9C
-ROM:000038C6                 .byte 0xFF
-ROM:000038C7                 .byte 0xE4
-ROM:000038C8                 .byte 0x40 # @
-ROM:000038C9                 .byte 0x82
-ROM:000038CA                 .byte 0xFF
-ROM:000038CB                 .byte 0xE0
-ROM:000038CC                 .byte 0x2F # /
-ROM:000038CD                 .byte    6
-ROM:000038CE                 .byte    0
-ROM:000038CF                 .byte    0
-ROM:000038D0                 .byte 0x41 # A
-ROM:000038D1                 .byte 0x9A
-ROM:000038D2                 .byte    0
-ROM:000038D3                 .byte 0x20
-ROM:000038D4                 .byte 0x54 # T
-ROM:000038D5                 .byte 0xA8
-ROM:000038D6                 .byte 0x10
-ROM:000038D7                 .byte 0x3A # :
-ROM:000038D8                 .byte 0x7D # }
-ROM:000038D9                 .byte  0xF
-ROM:000038DA                 .byte 0x40 # @
-ROM:000038DB                 .byte 0x2E # .
-ROM:000038DC                 .byte 0x54 # T
-ROM:000038DD                 .byte 0xAE
-ROM:000038DE                 .byte 0x60 # `
-ROM:000038DF                 .byte 0x26 # &
-ROM:000038E0                 .byte 0x7D # }
-ROM:000038E1                 .byte 0xCE
-ROM:000038E2                 .byte 0x82
-ROM:000038E3                 .byte 0x14
-ROM:000038E4                 .byte 0x7D # }
-ROM:000038E5                 .byte    8
-ROM:000038E6                 .byte 0x72 # r
-ROM:000038E7                 .byte 0x78 # x
-ROM:000038E8                 .byte 0x55 # U
-ROM:000038E9                 .byte    8
-ROM:000038EA                 .byte    0
-ROM:000038EB                 .byte 0x27 # '
-ROM:000038EC                 .byte 0x40 # @
-ROM:000038ED                 .byte 0x82
-ROM:000038EE                 .byte 0xFF
-ROM:000038EF                 .byte 0xBC
-ROM:000038F0                 .byte 0x3D # =
-ROM:000038F1                 .byte 0x20
-ROM:000038F2                 .byte    0
-ROM:000038F3                 .byte    4
-ROM:000038F4                 .byte 0x7F # 
-ROM:000038F5                 .byte 0x87
-ROM:000038F6                 .byte 0x48 # H
-ROM:000038F7                 .byte 0x40 # @
-ROM:000038F8                 .byte 0x54 # T
-ROM:000038F9                 .byte 0xE9
-ROM:000038FA                 .byte    0
-ROM:000038FB                 .byte 0x17
-ROM:000038FC                 .byte 0x41 # A
-ROM:000038FD                 .byte 0x9C
-ROM:000038FE                 .byte 0xF8
-ROM:000038FF                 .byte 0x3C # <
-ROM:00003900                 .byte 0x40 # @
-ROM:00003901                 .byte 0x82
-ROM:00003902                 .byte 0xF8
-ROM:00003903                 .byte 0x38 # 8
-ROM:00003904                 .byte 0x81
-ROM:00003905                 .byte 0xC1
-ROM:00003906                 .byte    5
-ROM:00003907                 .byte 0xE8
-ROM:00003908                 .byte 0x54 # T
-ROM:00003909                 .byte 0xE9
-ROM:0000390A                 .byte 0x9E
-ROM:0000390B                 .byte 0x78 # x
-ROM:0000390C                 .byte 0x7D # }
-ROM:0000390D                 .byte 0xCE
-ROM:0000390E                 .byte 0x48 # H
-ROM:0000390F                 .byte 0x2E # .
-ROM:00003910                 .byte 0x54 # T
-ROM:00003911                 .byte 0xE9
-ROM:00003912                 .byte    4
-ROM:00003913                 .byte 0x3E # >
-ROM:00003914                 .byte 0xA1
-ROM:00003915                 .byte  0xE
-ROM:00003916                 .byte    0
-ROM:00003917                 .byte    0
-ROM:00003918                 .byte 0x48 # H
-ROM:00003919                 .byte    0
-ROM:0000391A                 .byte    0
-ROM:0000391B                 .byte    8
-ROM:0000391C                 .byte 0xA5
-ROM:0000391D                 .byte  0xE
-ROM:0000391E                 .byte    0
-ROM:0000391F                 .byte    8
-ROM:00003920                 .byte 0xA2
-ROM:00003921                 .byte  0xE
-ROM:00003922                 .byte    0
-ROM:00003923                 .byte    2
-ROM:00003924                 .byte 0x7D # }
-ROM:00003925                 .byte    8
-ROM:00003926                 .byte 0x48 # H
-ROM:00003927                 .byte 0x50 # P
-ROM:00003928                 .byte 0x7F # 
-ROM:00003929                 .byte 0x88
-ROM:0000392A                 .byte 0x80
-ROM:0000392B                 .byte 0x40 # @
-ROM:0000392C                 .byte 0x41 # A
-ROM:0000392D                 .byte 0x9D
-ROM:0000392E                 .byte 0xFF
-ROM:0000392F                 .byte 0xF0
-ROM:00003930                 .byte 0x7D # }
-ROM:00003931                 .byte    8
-ROM:00003932                 .byte 0x2A # *
-ROM:00003933                 .byte 0x14
-ROM:00003934                 .byte 0x7F # 
-ROM:00003935                 .byte 0x88
-ROM:00003936                 .byte 0x80
-ROM:00003937                 .byte 0x40 # @
-ROM:00003938                 .byte 0x41 # A
-ROM:00003939                 .byte 0x9D
-ROM:0000393A                 .byte 0xF8
-ROM:0000393B                 .byte    0
-ROM:0000393C                 .byte 0x82
-ROM:0000393D                 .byte  0xE
-ROM:0000393E                 .byte    0
-ROM:0000393F                 .byte    4
-ROM:00003940                 .byte 0x54 # T
-ROM:00003941                 .byte 0xE8
-ROM:00003942                 .byte 0x80
-ROM:00003943                 .byte 0x1E
-ROM:00003944                 .byte 0x72 # r
-ROM:00003945                 .byte 0x10
-ROM:00003946                 .byte  0xE
-ROM:00003947                 .byte    1
-ROM:00003948                 .byte 0x2C # ,
-ROM:00003949                 .byte 0x10
-ROM:0000394A                 .byte  0xA
-ROM:0000394B                 .byte    1
-ROM:0000394C                 .byte 0x7D # }
-ROM:0000394D                 .byte    8
-ROM:0000394E                 .byte 0x2B # +
-ROM:0000394F                 .byte 0x78 # x
-ROM:00003950                 .byte 0x38 # 8
-ROM:00003951                 .byte 0xA5
-ROM:00003952                 .byte    0
-ROM:00003953                 .byte    1
-ROM:00003954                 .byte 0x40 # @
-ROM:00003955                 .byte 0x82
-ROM:00003956                 .byte 0xF7
-ROM:00003957                 .byte 0xE4
-ROM:00003958                 .byte 0x91
-ROM:00003959                 .byte  0xE
-ROM:0000395A                 .byte    0
-ROM:0000395B                 .byte    0
-ROM:0000395C                 .byte 0x40 # @
-ROM:0000395D                 .byte 0x9A
-ROM:0000395E                 .byte    0
-ROM:0000395F                 .byte 0x6D # m
-ROM:00003960                 .byte 0x55 # U
-ROM:00003961                 .byte 0xEF
-ROM:00003962                 .byte 0x50 # P
-ROM:00003963                 .byte 0x3E # >
-ROM:00003964                 .byte 0x61 # a
-ROM:00003965                 .byte 0xEF
-ROM:00003966                 .byte  0xC
-ROM:00003967                 .byte    0
-ROM:00003968                 .byte 0x91
-ROM:00003969                 .byte 0xEE
-ROM:0000396A                 .byte    0
-ROM:0000396B                 .byte    4
-ROM:0000396C                 .byte 0x80
-ROM:0000396D                 .byte 0xE1
-ROM:0000396E                 .byte    6
-ROM:0000396F                 .byte 0xAC
-ROM:00003970                 .byte 0x7C # |
-ROM:00003971                 .byte 0xE5
-ROM:00003972                 .byte 0x38 # 8
-ROM:00003973                 .byte 0x50 # P
-ROM:00003974                 .byte 0x90
-ROM:00003975                 .byte 0xE1
-ROM:00003976                 .byte    6
-ROM:00003977                 .byte 0xAC
-ROM:00003978                 .byte 0x90
-ROM:00003979                 .byte 0xE1
-ROM:0000397A                 .byte    6
-ROM:0000397B                 .byte 0xA8
-ROM:0000397C                 .byte 0x54 # T
-ROM:0000397D                 .byte 0xE8
-ROM:0000397E                 .byte 0x60 # `
-ROM:0000397F                 .byte 0x26 # &
-ROM:00003980                 .byte 0x91
-ROM:00003981                 .byte    1
-ROM:00003982                 .byte  0xC
-ROM:00003983                 .byte 0xC4
-ROM:00003984                 .byte 0x91
-ROM:00003985                 .byte    1
-ROM:00003986                 .byte  0xC
-ROM:00003987                 .byte 0xC8
-ROM:00003988                 .byte 0x39 # 9
-ROM:00003989                 .byte 0xC1
-ROM:0000398A                 .byte    0
-ROM:0000398B                 .byte 0x78 # x
-ROM:0000398C                 .byte 0x81
-ROM:0000398D                 .byte 0xE1
-ROM:0000398E                 .byte    6
-ROM:0000398F                 .byte 0xB0
-ROM:00003990                 .byte 0x39 # 9
-ROM:00003991                 .byte    0
-ROM:00003992                 .byte    0
-ROM:00003993                 .byte    0
-ROM:00003994                 .byte 0x38 # 8
-ROM:00003995                 .byte 0xE7
-ROM:00003996                 .byte 0xFF
-ROM:00003997                 .byte 0xFF
-ROM:00003998                 .byte 0x61 # a
-ROM:00003999                 .byte    8
-ROM:0000399A                 .byte 0xFF
-ROM:0000399B                 .byte 0xFF
-ROM:0000399C # ---------------------------------------------------------------------------
+ROM:0000370C # ---------------------------------------------------------------------------
+ROM:0000370C                 bl        GetPARPageInfo
+ROM:00003710                 bge       cr4, loc_3138
+ROM:00003714                 bgt       cr5, loc_3138
+ROM:00003718                 bltl      cr5, sub_3B2C
+ROM:0000371C                 insrwi    r16, r5, 1,15
+ROM:00003720                 li        r7, 1
+ROM:00003724                 andc      r16, r16, r7
+ROM:00003728                 stw       r16, 0(r15)
+ROM:0000372C                 b         VMReturn
+ROM:00003730 # ---------------------------------------------------------------------------
+ROM:00003730                 bl        GetPARPageInfo
+ROM:00003734                 bge       cr4, loc_3138
+ROM:00003738                 bns       cr7, loc_3138
+ROM:0000373C                 bgel      cr5, sub_3B60
+ROM:00003740                 li        r7, 0x180
+ROM:00003744                 andc      r9, r9, r7
+ROM:00003748                 ori       r16, r16, 0x100
+ROM:0000374C                 bl        sub_3B0C
+ROM:00003750                 b         VMReturn
+ROM:00003754 # ---------------------------------------------------------------------------
+ROM:00003754                 cmplw     r4, r9
+ROM:00003758                 cmplw     cr1, r5, r9
+ROM:0000375C                 add       r7, r4, r5
+ROM:00003760                 cmplw     cr2, r7, r9
+ROM:00003764                 bge       loc_3138
+ROM:00003768                 bgt       cr1, loc_3138
+ROM:0000376C                 bgt       cr2, loc_3138
+ROM:00003770                 lwz       r15, 0x6B0(r1)
+ROM:00003774                 slwi      r8, r7, 2
+ROM:00003778                 li        r7, 1
+ROM:0000377C
+ROM:0000377C loc_377C:                               # CODE XREF: ROM:00003794↓j
+ROM:0000377C                 addi      r8, r8, -4
+ROM:00003780                 subf.     r5, r7, r5
+ROM:00003784                 lwzx      r16, r15, r8
+ROM:00003788                 blt       VMReturn
+ROM:0000378C                 insrwi    r16, r6, 1,24
+ROM:00003790                 stwx      r16, r15, r8
+ROM:00003794                 b         loc_377C
+ROM:00003798 # ---------------------------------------------------------------------------
+ROM:00003798                 bl        GetPARPageInfo
+ROM:0000379C                 bge       cr4, loc_3138
+ROM:000037A0                 bso       cr7, loc_3138
+ROM:000037A4                 bltl      cr5, Thud
+ROM:000037A8                 insrwi    r16, r5, 20,0
+ROM:000037AC                 ori       r16, r16, 1
+ROM:000037B0                 stw       r16, 0(r15)
+ROM:000037B4                 bl        sub_3B60
+ROM:000037B8                 bl        sub_3B0C
+ROM:000037BC                 b         VMReturn
+ROM:000037C0 # ---------------------------------------------------------------------------
+ROM:000037C0                 srwi      r4, r4, 12
+ROM:000037C4                 cmplw     r4, r9
+ROM:000037C8                 li        r3, 0x4000
+ROM:000037CC                 bge       VMReturn
+ROM:000037D0                 bl        GetPARPageInfo
+ROM:000037D4                 li        r3, 0x400
+ROM:000037D8                 bns       cr7, VMReturn
+ROM:000037DC                 li        r3, 0
+ROM:000037E0                 ori       r3, r3, 0x8000
+ROM:000037E4                 ble       cr7, VMReturn
+ROM:000037E8                 cmpwi     r6, 0
+ROM:000037EC                 beq       VMReturn
+ROM:000037F0                 li        r3, 0x800
+ROM:000037F4                 b         VMReturn
+ROM:000037F8 # ---------------------------------------------------------------------------
+ROM:000037F8                 mr        r6, r4
+ROM:000037FC                 mr        r4, r5
+ROM:00003800                 bl        GetPARPageInfo
+ROM:00003804                 bge       cr4, loc_3138
+ROM:00003808                 xor       r7, r16, r6
+ROM:0000380C                 li        r3, 0x461
+ROM:00003810                 rlwimi    r3, r16, 24,29,29
+ROM:00003814                 and.      r3, r3, r7
+ROM:00003818                 bne       loc_3138
+ROM:0000381C                 andi.     r7, r7, 0x11C
+ROM:00003820                 xor       r16, r16, r7
+ROM:00003824                 stw       r16, 0(r15)
+ROM:00003828                 bge       cr5, VMReturn
+ROM:0000382C                 rlwimi    r9, r16, 5,23,23
+ROM:00003830                 rlwimi    r9, r16, 3,24,24
+ROM:00003834                 rlwimi    r9, r16, 30,31,31
+ROM:00003838                 bl        sub_3B14
+ROM:0000383C                 b         VMReturn
+ROM:00003840 # ---------------------------------------------------------------------------
+ROM:00003840                 bl        GetPARPageInfo
+ROM:00003844                 bns       cr7, loc_3140
+ROM:00003848                 blt       cr7, loc_3140
+ROM:0000384C                 bns       cr6, loc_3140
+ROM:00003850                 bge       cr4, loc_3138
+ROM:00003854                 xori      r16, r16, 0x10
+ROM:00003858                 ori       r16, r16, 0x100
+ROM:0000385C                 stw       r16, 0(r15)
+ROM:00003860                 bge       cr5, loc_3148
+ROM:00003864                 xori      r9, r9, 0x80
+ROM:00003868                 bl        sub_3B14
+ROM:0000386C                 b         loc_3148
+ROM:00003870 # ---------------------------------------------------------------------------
+ROM:00003870                 lwz       r7, 0x6B0(r1)
+ROM:00003874                 lwz       r8, 0x5B0(r1)
+ROM:00003878                 cmpwi     cr6, r5, 0
+ROM:0000387C                 cmpw      cr7, r7, r8
+ROM:00003880                 or        r7, r4, r6
+ROM:00003884                 clrrwi.   r7, r7, 20
+ROM:00003888                 ble       cr6, loc_3138
+ROM:0000388C                 lwz       r9, 0x6A8(r1)
+ROM:00003890                 bne       cr7, loc_3138
+ROM:00003894                 mr        r7, r4
+ROM:00003898                 bne       loc_3138
+ROM:0000389C                 mr        r4, r9
+ROM:000038A0                 slwi      r6, r6, 12
+ROM:000038A4                 addi      r5, r5, -1
+ROM:000038A8
+ROM:000038A8 loc_38A8:                               # CODE XREF: ROM:000038C4↓j
+ROM:000038A8                                         # ROM:000038C8↓j ...
+ROM:000038A8                 addi      r4, r4, -1
+ROM:000038AC                 bl        GetPARPageInfo
+ROM:000038B0                 bltl      cr5, sub_3B2C
+ROM:000038B4                 lwz       r9, 0x6A8(r1)
+ROM:000038B8                 subf      r8, r4, r9
+ROM:000038BC                 cmplw     cr7, r5, r8
+ROM:000038C0                 and.      r8, r16, r6
+ROM:000038C4                 bge       cr7, loc_38A8
+ROM:000038C8                 bne       loc_38A8
+ROM:000038CC                 cmpwi     cr6, r6, 0
+ROM:000038D0                 beq       cr6, loc_38F0
+ROM:000038D4                 slwi      r8, r5, 2
+ROM:000038D8                 lwzx      r8, r15, r8
+ROM:000038DC                 slwi      r14, r5, 12
+ROM:000038E0                 add       r14, r14, r16
+ROM:000038E4                 xor       r8, r8, r14
+ROM:000038E8                 clrrwi.   r8, r8, 12
+ROM:000038EC                 bne       loc_38A8
+ROM:000038F0
+ROM:000038F0 loc_38F0:                               # CODE XREF: ROM:000038D0↑j
+ROM:000038F0                 lis       r9, 4
+ROM:000038F4                 cmplw     cr7, r7, r9
+ROM:000038F8                 clrrwi.   r9, r7, 20
+ROM:000038FC                 blt       cr7, loc_3138
+ROM:00003900                 bne       loc_3138
+ROM:00003904                 lwz       r14, 0x5E8(r1)
+ROM:00003908                 rlwinm    r9, r7, 19,25,28
+ROM:0000390C                 lwzx      r14, r14, r9
+ROM:00003910                 clrlwi    r9, r7, 16
+ROM:00003914                 lhz       r8, 0(r14)
+ROM:00003918                 b         loc_3920
+ROM:0000391C # ---------------------------------------------------------------------------
+ROM:0000391C
+ROM:0000391C loc_391C:                               # CODE XREF: ROM:0000392C↓j
+ROM:0000391C                 lhzu      r8, 8(r14)
+ROM:00003920
+ROM:00003920 loc_3920:                               # CODE XREF: ROM:00003918↑j
+ROM:00003920                 lhz       r16, 2(r14)
+ROM:00003924                 subf      r8, r8, r9
+ROM:00003928                 cmplw     cr7, r8, r16
+ROM:0000392C                 bgt       cr7, loc_391C
+ROM:00003930                 add       r8, r8, r5
+ROM:00003934                 cmplw     cr7, r8, r16
+ROM:00003938                 bgt       cr7, loc_3138
+ROM:0000393C                 lwz       r16, 4(r14)
+ROM:00003940                 slwi      r8, r7, 16
+ROM:00003944                 andi.     r16, r16, 0xE01
+ROM:00003948                 cmpwi     r16, 0xA01
+ROM:0000394C                 or        r8, r8, r5
+ROM:00003950                 addi      r5, r5, 1
+ROM:00003954                 bne       loc_3138
+ROM:00003958                 stw       r8, 0(r14)
+ROM:0000395C                 bnel      cr6, sub_39C8
+ROM:00003960                 rotlwi    r15, r15, 10
+ROM:00003964                 ori       r15, r15, 0xC00
+ROM:00003968                 stw       r15, 4(r14)
+ROM:0000396C                 lwz       r7, 0x6AC(r1)
+ROM:00003970                 subf      r7, r5, r7
+ROM:00003974                 stw       r7, 0x6AC(r1)
+ROM:00003978                 stw       r7, 0x6A8(r1)
+ROM:0000397C                 slwi      r8, r7, 12
+ROM:00003980                 stw       r8, 0xCC4(r1)
+ROM:00003984                 stw       r8, 0xCC8(r1)
+ROM:00003988                 addi      r14, r1, 0x78
+ROM:0000398C                 lwz       r15, 0x6B0(r1)
+ROM:00003990                 li        r8, 0
+ROM:00003994                 addi      r7, r7, -1
+ROM:00003998                 ori       r8, r8, 0xFFFF
 ROM:0000399C
 ROM:0000399C loc_399C:                               # CODE XREF: ROM:000039BC↓j
 ROM:0000399C                 cmplwi    r7, 0xFFFF
@@ -7728,10 +7221,18 @@ ROM:000039B8                 addis     r7, r7, -1
 ROM:000039BC                 bgt       loc_399C
 ROM:000039C0                 sth       r7, 2(r16)
 ROM:000039C4                 b         loc_3148
-ROM:000039C8 # ---------------------------------------------------------------------------
+ROM:000039C8
+ROM:000039C8 # =============== S U B R O U T I N E =======================================
+ROM:000039C8
+ROM:000039C8
+ROM:000039C8 sub_39C8:                               # CODE XREF: ROM:0000395C↑p
+ROM:000039C8
+ROM:000039C8 .set arg_6AC,  0x6AC
+ROM:000039C8 .set arg_6B0,  0x6B0
+ROM:000039C8
 ROM:000039C8                 lwz       r16, 0(r15)
-ROM:000039CC                 lwz       r7, 0x6AC(r1)
-ROM:000039D0                 lwz       r8, 0x6B0(r1)
+ROM:000039CC                 lwz       r7, arg_6AC(r1)
+ROM:000039D0                 lwz       r8, arg_6B0(r1)
 ROM:000039D4                 slwi      r7, r7, 2
 ROM:000039D8                 add       r7, r7, r8
 ROM:000039DC                 slwi      r8, r5, 2
@@ -7740,20 +7241,22 @@ ROM:000039E4                 cmplw     r15, r7
 ROM:000039E8                 beqlr
 ROM:000039EC                 addi      r7, r7, -4
 ROM:000039F0
-ROM:000039F0 loc_39F0:                               # CODE XREF: ROM:00003A00↓j
+ROM:000039F0 loc_39F0:                               # CODE XREF: sub_39C8+38↓j
 ROM:000039F0                 lwzx      r9, r15, r8
 ROM:000039F4                 cmplw     r15, r7
 ROM:000039F8                 stw       r9, 0(r15)
 ROM:000039FC                 addi      r15, r15, 4
 ROM:00003A00                 blt       loc_39F0
 ROM:00003A04
-ROM:00003A04 loc_3A04:                               # CODE XREF: ROM:00003A14↓j
+ROM:00003A04 loc_3A04:                               # CODE XREF: sub_39C8+4C↓j
 ROM:00003A04                 cmpwi     r8, 4
 ROM:00003A08                 addi      r8, r8, -4
 ROM:00003A0C                 stwu      r16, 4(r7)
 ROM:00003A10                 addi      r16, r16, 0x1000
 ROM:00003A14                 bgt       loc_3A04
 ROM:00003A18                 blr
+ROM:00003A18 # End of function sub_39C8
+ROM:00003A18
 ROM:00003A1C
 ROM:00003A1C # =============== S U B R O U T I N E =======================================
 ROM:00003A1C
@@ -7859,6 +7362,7 @@ ROM:00003B14 # =============== S U B R O U T I N E =============================
 ROM:00003B14
 ROM:00003B14
 ROM:00003B14 sub_3B14:                               # CODE XREF: sub_34AC+48↑p
+ROM:00003B14                                         # ROM:00003838↑p ...
 ROM:00003B14                 stw       r9, 4(r14)
 ROM:00003B18                 slwi      r8, r4, 12
 ROM:00003B1C                 sync
@@ -7900,7 +7404,7 @@ ROM:00003B60 # =============== S U B R O U T I N E =============================
 ROM:00003B60
 ROM:00003B60
 ROM:00003B60 sub_3B60:                               # CODE XREF: sub_3510+18↑p
-ROM:00003B60                                         # sub_3540+14↑p
+ROM:00003B60                                         # sub_3540+14↑p ...
 ROM:00003B60
 ROM:00003B60 .set arg_688,  0x688
 ROM:00003B60 .set arg_6A0,  0x6A0
