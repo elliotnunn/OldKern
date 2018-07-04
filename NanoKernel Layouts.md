@@ -57,28 +57,31 @@ Found in v02.28 `NKInterrupts.s`, directly after the MemRetriable interrupts
 Corresponds with v02.28 `NKPaging.s`
 
 
-## 1FB8:24F4 Interrupt disposition
+## 1FB8:24F4 Exceptions
 
 Found in v02.28 `NKInterrupts.s`
 
 	Exception[MemRetried]
+	LoadInterruptRegisters (moved to handlers in v02.28)
 	LetBlueHandleOwnException
-	kcReturnFromException (moved to misc interrupt routines in v02.28)
+	kcReturnFromException (moved to handlers in v02.28)
 	IntReturnToSystemContext
 	IntReturnToOtherBlueContext
 	IntReturn (has own RFI, no scheduler to call)
 	major_0x02ccc
 
 
-## 2500:30CC Misc interrupt routines
+## 2500:289C Floating-point interrupts
 
-	Floating point
-		IntFPUnavail
-		IntHandleSpecialFPException
-		LoadFloatsFromContextBlock
-		bugger_around_with_floats
-		FloatLoadJumpTable
-		FloatSaveJumpTable
+	IntFPUnavail
+	IntHandleSpecialFPException
+	LoadFloatsFromContextBlock
+	bugger_around_with_floats
+	FloatLoadJumpTable
+	FloatSaveJumpTable
+
+## 289C:30CC Misc interrupt routines
+
 	msr_12_was_set_suspicious
 	kcRunAlternateContext
 	kcResetSystem (does high-level SecInit unless skeleton key)
@@ -107,7 +110,7 @@ The true builtin-specific init code corresponds with v01.01 init code. The reset
 
 This file should probably be split up.
 
-### Interrupt disposition
+### Exceptions
 
 Keep these in one file
 
@@ -152,18 +155,22 @@ Keep these in one file, and "include" `NKTranslation.s`
 		MaskedInterruptTaken
 		PIHDSI
 
+	Moved here since 01.01:
+		kcReturnFromException
+		save_all_registers
+		LoadInterruptRegisters
+
+### Floating-point interrupts
+
+	IntFPUnavail
+	major_0x03e18/IntHandleSpecialFPException
+	LoadFloatsFromContextBlock
+	bugger_around_with_floats
+	FloatLoadJumpTable
+	FloatSaveJumpTable
+
 ### Misc interrupt routines
 
-	kcReturnFromException (moved since v01.01)
-	save_all_registers (not in v01.01)
-	LoadInterruptRegisters (not in v01.01)
-	Floating point
-		IntFPUnavail
-		major_0x03e18/IntHandleSpecialFPException
-		LoadFloatsFromContextBlock
-		bugger_around_with_floats
-		FloatLoadJumpTable
-		FloatSaveJumpTable
 	major_0x04180
 	IntPerfMonitor
 	IntThermalEvent
